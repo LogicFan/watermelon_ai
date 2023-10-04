@@ -1,6 +1,7 @@
 from datetime import datetime
 from PIL import Image
 import time
+import os
 
 import capture
 import controller
@@ -37,13 +38,15 @@ def run_turn():
 if __name__ == "__main__":
     for _ in range(0, iteration):
         run = datetime.now().strftime("%Y%m%d%H%M")
+        os.makedirs(f"data/{run}/raw")
 
         turn = 0
         screen = capture.screen_image()
         while screen is not None:
-            screen.save(f"data/{run}/raw/{turn>3}.png")
+            screen.save(f"data/{run}/raw/{turn:>3}.png")
             run_turn()
 
+            turn += 1
             screen = capture.screen_image()
         # conclude iteration
         exit()
