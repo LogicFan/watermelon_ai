@@ -12,7 +12,7 @@ iteration = 10
 estimator = bot.naive.NaiveBot()
 
 
-def run_turn():
+def run_turn() -> bool:
     controller.zero()
 
     optimizer = bot.core.Optimizer()
@@ -32,8 +32,7 @@ def run_turn():
     best = optimizer.get()
     frame = capture.screen_image()
     controller.move(best, frame)
-    time.sleep(0.1)
-    controller.drop()
+    return True
 
 
 if __name__ == "__main__":
@@ -42,12 +41,16 @@ if __name__ == "__main__":
         os.makedirs(f"data/{run}/raw")
 
         turn = 0
-        screen = capture.screen_image()
-        while screen is not None:
+        while True:
+            try:
+                run_turn()
+            except capture.GameOverException:
+                break
+
+            screen = capture.screen_image()
             screen.save(f"data/{run}/raw/{turn:>3}.png")
-            run_turn()
+            controller.drop()
 
             turn += 1
-            screen = capture.screen_image()
-        # conclude iteration
+
         exit()

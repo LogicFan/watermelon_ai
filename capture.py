@@ -9,11 +9,15 @@ pytesseract.pytesseract.tesseract_cmd = (
 )
 
 
+class GameOverException(Exception):
+    pass
+
+
 # get the full screen image
 def screen_image() -> Image:
     pos = pyautogui.locateOnScreen("resource/locate.png", confidence=0.95)
     if pos is None:
-        return None
+        raise GameOverException()
     x = pos.left + pos.width - 1280
     y = pos.top + pos.height - 720
     screenshot = pyautogui.screenshot(region=(x, y, 1280, 720))
