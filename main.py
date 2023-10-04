@@ -38,7 +38,7 @@ def run_turn() -> bool:
 if __name__ == "__main__":
     for _ in range(0, iteration):
         run = datetime.now().strftime("%Y%m%d%H%M")
-        os.makedirs(f"data/{run}/raw")
+        os.makedirs(f"data/raw/{run}")
 
         turn = 0
         while True:
@@ -48,7 +48,7 @@ if __name__ == "__main__":
                 break
 
             screen = capture.screen_image()
-            screen.save(f"data/{run}/raw/{turn:>3}.png")
+            screen.save(f"data/raw/{run}/{turn:>3}.png")
             controller.drop()
             time.sleep(5)
 
