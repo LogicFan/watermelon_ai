@@ -59,3 +59,4 @@ def restart():
     confirm()
     left()
     confirm()
+    time.sleep(10)
