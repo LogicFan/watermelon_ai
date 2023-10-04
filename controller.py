@@ -49,7 +49,13 @@ def left():
     keyboard.release(KEY_LEFT)
 
 
-def drop():
+def confirm():
     keyboard.press(KEY_CONFIRM)
-    time.sleep(0.1)
+    time.sleep(0.001)
     keyboard.release(KEY_CONFIRM)
+
+
+def restart():
+    confirm()
+    left()
+    confirm()

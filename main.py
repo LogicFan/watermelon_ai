@@ -49,9 +49,9 @@ if __name__ == "__main__":
 
             screen = capture.screen_image()
             screen.save(f"data/raw/{run}/{turn:>3}.png")
-            controller.drop()
+            controller.confirm()
             time.sleep(5)
 
             turn += 1
 
-        exit()
+        controller.restart()
