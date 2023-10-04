@@ -50,6 +50,7 @@ if __name__ == "__main__":
             screen = capture.screen_image()
             screen.save(f"data/{run}/raw/{turn:>3}.png")
             controller.drop()
+            time.sleep(5)
 
             turn += 1
 
