@@ -40,8 +40,3 @@ def drop_position(img: Image) -> int:
     pos = pyautogui.locate("resource/drop.png", img, confidence=0.8)
     pos = pos.left - 491
     return pos
-
-
-screen = screen_image()
-playground(screen)
-drop_position(screen)
