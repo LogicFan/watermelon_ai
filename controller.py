@@ -15,7 +15,7 @@ MAX_POSITION = 372
 # reset to 0 position
 def zero():
     keyboard.press(KEY_LEFT)
-    time.sleep(1)
+    time.sleep(1.5)
     keyboard.release(KEY_LEFT)
 
 
