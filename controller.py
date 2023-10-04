@@ -12,8 +12,15 @@ MIN_POSITION = 0
 MAX_POSITION = 372
 
 
+# reset to 0 position
+def zero():
+    keyboard.press(KEY_LEFT)
+    time.sleep(1)
+    keyboard.release(KEY_LEFT)
+
+
 # move to target position
-def move_to(target: int, frame: Image):
+def move(target: int, frame: Image):
     source = capture.drop_position(frame)
     if target > source:
         t = 3.5 * (target - source)
@@ -28,14 +35,18 @@ def move_to(target: int, frame: Image):
 
 
 # 1 step right
-def step_right():
+def right():
     keyboard.press(KEY_RIGHT)
     time.sleep(0.001)
     keyboard.release(KEY_RIGHT)
 
 
 # 1 step left
-def step_left():
+def left():
     keyboard.press(KEY_LEFT)
     time.sleep(0.001)
     keyboard.release(KEY_LEFT)
+
+
+def drop():
+    keyboard.send("c")
