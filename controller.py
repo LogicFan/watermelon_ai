@@ -6,6 +6,7 @@ import capture
 
 KEY_RIGHT = keyboard.parse_hotkey("right")
 KEY_LEFT = keyboard.parse_hotkey("left")
+KEY_CONFIRM = keyboard.parse_hotkey("c")
 
 
 MIN_POSITION = 0
@@ -49,4 +50,6 @@ def left():
 
 
 def drop():
-    keyboard.send("c")
+    keyboard.press(KEY_CONFIRM)
+    time.sleep(0.1)
+    keyboard.release(KEY_CONFIRM)

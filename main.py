@@ -32,6 +32,7 @@ def run_turn():
     best = optimizer.get()
     frame = capture.screen_image()
     controller.move(best, frame)
+    time.sleep(0.1)
     controller.drop()
 
 
