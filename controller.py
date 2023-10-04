@@ -56,7 +56,10 @@ def confirm():
 
 
 def restart():
+    time.sleep(1)
     confirm()
+    time.sleep(1)
     left()
+    time.sleep(1)
     confirm()
     time.sleep(10)
