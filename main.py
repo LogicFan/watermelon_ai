@@ -43,6 +43,7 @@ if __name__ == "__main__":
         turn = 0
         while True:
             try:
+                print(f"running turn {turn}")
                 run_turn()
             except capture.GameOverException:
                 break
@@ -54,4 +55,5 @@ if __name__ == "__main__":
 
             turn += 1
 
+        print(f"run {run} completed")
         controller.restart()
