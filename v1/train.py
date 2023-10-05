@@ -93,3 +93,6 @@ for epoch in range(EPOCHS):
         torch.save(model.state_dict(), model_path)
 
     epoch_number += 1
+
+model_path = "model_{}_final".format(timestamp)
+torch.save(model.state_dict(), model_path)
