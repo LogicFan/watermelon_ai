@@ -20,4 +20,5 @@ class Optimizer:
             self.position = position
 
     def get(self) -> int:
+        print(f"position {self.position} has the best score {self.score}")
         return self.position

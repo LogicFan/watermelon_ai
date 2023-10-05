@@ -9,7 +9,7 @@ import bot
 
 # configuration
 iteration = 10
-estimator = bot.naive.NaiveBot()
+estimator = bot.v1.BotV1()
 
 
 def run_turn() -> bool:
@@ -30,6 +30,8 @@ def run_turn() -> bool:
         time.sleep(0.1)
 
     best = optimizer.get()
+    optimizer.reset()
+
     frame = capture.screen_image()
     controller.move(best, frame)
     return True
