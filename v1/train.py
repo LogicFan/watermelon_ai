@@ -20,7 +20,7 @@ test_loader = DataLoader(test_set, batch_size=4, shuffle=False)
 model = mobilenet_v3_small(weights=MobileNet_V3_Small_Weights.DEFAULT)
 model.classifier[3] = torch.nn.Linear(in_features=1024, out_features=1, bias=True)
 print(model)
-loss_fn = torch.nn.MSELoss()
+loss_fn = torch.nn.SmoothL1Loss()
 optimizer = torch.optim.Adam(params=model.parameters(), lr=0.001)
 
 
