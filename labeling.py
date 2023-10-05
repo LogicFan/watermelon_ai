@@ -41,6 +41,6 @@ for run in os.listdir("data/raw"):
         current = capture.score(image)
 
         if not validate(current, next):
-            print(f"[ERROR] suspicious OCR result for data/raw/{run}/{images[0]}")
+            print(f"[ERROR] suspicious OCR result for data/raw/{run}/{images[i]}")
 
         write(f"{path}.txt", current)
