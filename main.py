@@ -9,7 +9,7 @@ import bot
 
 # configuration
 iteration = 10
-estimator = bot.naive.NaiveBot()
+estimator = bot.v1.BotV1()
 
 
 def run_turn() -> bool:

@@ -17,10 +17,12 @@ class BotV1(core.BaseBot):
         self.model = model
         self.model.eval()
 
-    def predicate(self, img: Image) -> int:
+    def predicate(self, img: Image) -> float:
         img = np.array(img)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         img = img.transpose((2, 1, 0))
+        img = img.astype(np.float32) / 255.0
         img = np.expand_dims(img, axis=0)
+        img = torch.tensor(img)
 
-        return self.model(img)[0]
+        return self.model(img)[0].item()
