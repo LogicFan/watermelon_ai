@@ -41,7 +41,9 @@ for run in os.listdir("data/raw"):
             continue
 
         if not validate(current, next):
-            print(f"[ERROR] suspicious OCR result for data/raw/{run}/{images[i]}")
+            print(
+                f"[ERROR] suspicious OCR result {current} for data/raw/{run}/{images[i]}"
+            )
             raise Exception("human labeling required")
 
         write(f"{path}.txt", current)
