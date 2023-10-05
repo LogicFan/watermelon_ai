@@ -20,7 +20,7 @@ test_loader = DataLoader(test_set, batch_size=4, shuffle=False)
 model = mobilenet_v3_small(weights=MobileNet_V3_Small_Weights.DEFAULT)
 model.classifier[3] = torch.nn.Linear(in_features=1024, out_features=1, bias=True)
 print(model)
-loss_fn = torch.nn.SmoothL1Loss()
+loss_fn = torch.nn.MSELoss()
 optimizer = torch.optim.Adam(params=model.parameters(), lr=0.001)
 
 
@@ -50,7 +50,7 @@ timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 writer = SummaryWriter("runs/fashion_trainer_{}".format(timestamp))
 epoch_number = 0
 
-EPOCHS = 5
+EPOCHS = 20
 
 best_vloss = 1_000_000.0
 

@@ -20,6 +20,6 @@ class WatermelonDataset(Dataset):
         img = img.astype(np.float32) / 255.0
 
         with open(f"data/processed/{idx:0>5}.label") as f:
-            label = [int(f.read())]
+            label = [float(f.read())]
 
         return torch.tensor(img), torch.tensor(label)
