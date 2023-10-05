@@ -49,7 +49,7 @@ if __name__ == "__main__":
                 break
 
             screen = capture.screen_image()
-            screen.save(f"data/raw/{run}/{turn:>3}.png")
+            screen.save(f"data/raw/{run}/{turn:0>3}.png")
             controller.confirm()
             time.sleep(5)
 
