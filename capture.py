@@ -38,7 +38,7 @@ def score(img: Image) -> int:
         text.replace("71", "7")
 
     if int(text) > 4000 and text[0] == "7":
-        text[0] = "1"
+        text = "1" + text[1:]
 
     return int(text)
 
