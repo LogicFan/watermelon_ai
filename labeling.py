@@ -10,10 +10,6 @@ def validate(current_score: int, next_score: int) -> bool:
 
 
 def write(path: str, score: int):
-    if os.path.exists(path):
-        print(f"skipping {path}")
-        return
-
     with open(path, "w") as f:
         print(f"write {score} to {path}")
         f.write(str(score))
@@ -40,7 +36,12 @@ for run in os.listdir("data/raw"):
         next = current
         current = capture.score(image)
 
+        if os.path.exists(f"{path}.txt"):
+            print(f"skipping {path}")
+            continue
+
         if not validate(current, next):
             print(f"[ERROR] suspicious OCR result for data/raw/{run}/{images[i]}")
+            raise Exception("human labeling required")
 
         write(f"{path}.txt", current)
