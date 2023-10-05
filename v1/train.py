@@ -50,7 +50,7 @@ timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 writer = SummaryWriter("runs/fashion_trainer_{}".format(timestamp))
 epoch_number = 0
 
-EPOCHS = 20
+EPOCHS = 50
 
 best_vloss = 1_000_000.0
 
