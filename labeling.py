@@ -9,10 +9,15 @@ def validate(current_score: int, next_score: int) -> bool:
     return current_score < 4000 and current_score <= next_score
 
 
-def write(path: str, score: int):
+def write_score(path: str, score: int):
     with open(path, "w") as f:
         print(f"write {score} to {path}")
         f.write(str(score))
+
+
+def read_score(path: str) -> int:
+    with open(path) as f:
+        return int(f.read())
 
 
 blacklist = [
@@ -49,11 +54,12 @@ for run in os.listdir("data/raw"):
         image = Image.open(f"{path}.png")
 
         next = current
-        current = capture.score(image)
-
         if os.path.exists(f"{path}.txt"):
-            print(f"skipping {path}")
+            current = read_score(f"{path}.txt")
+            print(f"skipping {path} with score {current}")
             continue
+        else:
+            current = capture.score(image)
 
         if not validate(current, next):
             print(
@@ -61,4 +67,4 @@ for run in os.listdir("data/raw"):
             )
             raise Exception("human labeling required")
 
-        write(f"{path}.txt", current)
+        write_score(f"{path}.txt", current)
