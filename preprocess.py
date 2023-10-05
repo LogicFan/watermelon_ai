@@ -6,4 +6,4 @@ import os
 #     print(images)
 
 for i in range(31):
-    os.rename(f"data/raw/202310041817/{i}.png", f"data/raw/202310041817/{i:0>3}.png")
+    os.rename(f"data/raw/202310041908/{i:>3}.png", f"data/raw/202310041908/{i:0>3}.png")
