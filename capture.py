@@ -26,7 +26,7 @@ def screen_image() -> Image:
 
 # given a full screen image, return the current score
 def score(img: Image) -> int:
-    img = numpy.array(img.crop((72, 115, 313, 165)))
+    img = numpy.array(img.crop((112, 115, 273, 165)))
     img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
     _, img = cv2.threshold(img, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
     text: str = pytesseract.image_to_string(
