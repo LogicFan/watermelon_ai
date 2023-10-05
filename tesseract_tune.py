@@ -32,11 +32,3 @@ count = 0
 #         img = Image.open(f"data/raw/{run}/{filename}")
 #         score = capture.score(img)
 #         write(img, score)
-
-import subprocess
-
-for filename in os.listdir("data/num-ground-truth/"):
-    if filename.endswith(".gt.txt"):
-        with open(f"data/num-ground-truth/{filename}", "r") as f1:
-            with open(f"data/num-ground-truth/{filename[:-7]}.box", "w") as f2:
-                f2.writelines([f"{c} 1 0 244 50 0\n" for c in str(f1.read())])
