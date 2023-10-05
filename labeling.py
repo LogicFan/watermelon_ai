@@ -15,8 +15,20 @@ def write(path: str, score: int):
         f.write(str(score))
 
 
+blacklist = [
+    "202310041817",
+    "202310041908",
+    "202310050020",
+    "202310050032",
+    "202310050034",
+    "202310050037",
+    "202310050212",
+]
+
 for run in os.listdir("data/raw"):
     print(f"processing run {run}")
+    if run in blacklist:
+        print("skipping")
 
     # reverse ordering, so we process from newest to oldest
     images = sorted(
