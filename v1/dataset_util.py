@@ -19,8 +19,7 @@ class WatermelonDataset(Dataset):
         img = img.transpose((2, 1, 0))
         img = img.astype(np.float32) / 255.0
 
-        with open(f"data/processed/{idx:0>5}.json") as f:
-            text = json.load(f)
-        label = [float(max(0, text["next"] - text["curr"]))]
+        with open(f"data/processed/{idx:0>5}.label") as f:
+            label = [int(f.read())]
 
         return torch.tensor(img), torch.tensor(label)
