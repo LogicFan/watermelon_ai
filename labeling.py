@@ -23,12 +23,14 @@ blacklist = [
     "202310050034",
     "202310050037",
     "202310050212",
+    "202310050254",
 ]
 
 for run in os.listdir("data/raw"):
     print(f"processing run {run}")
     if run in blacklist:
         print("skipping")
+        continue
 
     # reverse ordering, so we process from newest to oldest
     images = sorted(
