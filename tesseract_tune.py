@@ -9,26 +9,34 @@ import capture
 count = 0
 
 
-os.makedirs("data/num-ground-truth/", exist_ok=True)
+# os.makedirs("data/num-ground-truth/", exist_ok=True)
 
 
-def write(img: Image, score: int):
-    global count
+# def write(img: Image, score: int):
+#     global count
 
-    img = numpy.array(img.crop((72, 115, 313, 165)))
-    img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-    _, img = cv2.threshold(img, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+#     img = numpy.array(img.crop((72, 115, 313, 165)))
+#     img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+#     _, img = cv2.threshold(img, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
 
-    Image.fromarray(img).save(f"data/num-ground-truth/{count:0>5}.png")
-    with open(f"data/num-ground-truth/{count:0>5}.gt.txt", "w") as f:
-        f.write(str(score))
+#     Image.fromarray(img).save(f"data/num-ground-truth/{count:0>5}.png")
+#     with open(f"data/num-ground-truth/{count:0>5}.gt.txt", "w") as f:
+#         f.write(str(score))
 
-    count += 1
+#     count += 1
 
 
-for run in os.listdir("data/raw"):
-    print(f"processing run {run}")
-    for filename in os.listdir(f"data/raw/{run}"):
-        img = Image.open(f"data/raw/{run}/{filename}")
-        score = capture.score(img)
-        write(img, score)
+# for run in os.listdir("data/raw"):
+#     print(f"processing run {run}")
+#     for filename in os.listdir(f"data/raw/{run}"):
+#         img = Image.open(f"data/raw/{run}/{filename}")
+#         score = capture.score(img)
+#         write(img, score)
+
+import subprocess
+
+for filename in os.listdir("data/num-ground-truth/"):
+    if filename.endswith(".gt.txt"):
+        with open(f"data/num-ground-truth/{filename}", "r") as f1:
+            with open(f"data/num-ground-truth/{filename[:-7]}.box", "w") as f2:
+                f2.writelines([f"{c} 1 0 244 50 0"] for c in str(f1.read()))
