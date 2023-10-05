@@ -27,8 +27,13 @@ for run in os.listdir("data/raw"):
     img = Image.open(f"data/raw/{run}/{filename[0]}")
 
     final = capture.score(img)
-    next = capture.score(img)
-    curr = capture.score(img)
+    next = final
+    curr = final
+
+    if final > 4000:
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print(f"[ERROR] incorrect OCR data for the last file of {run}")
+        continue
 
     write(img, final, next, curr)
 
@@ -36,4 +41,8 @@ for run in os.listdir("data/raw"):
         img = Image.open(f"data/raw/{run}/{filename[i]}")
         next = curr
         curr = capture.score(img)
+        if curr > final:
+            print(f"[WARN]  incorrect OCR data for data/raw/{run}/{filename[i]}")
+            curr = next
+            continue
         write(img, final, next, curr)

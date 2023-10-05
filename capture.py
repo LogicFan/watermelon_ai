@@ -30,15 +30,10 @@ def score(img: Image) -> int:
     img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
     _, img = cv2.threshold(img, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
     text: str = pytesseract.image_to_string(
-        img, lang="eng", config="--psm 8 -c tessedit_char_whitelist=0123456789"
+        img,
+        lang="eng",
+        config="--psm 8 -c tessedit_char_whitelist=0123456789",
     )
-
-    # some hacky post processing
-    if int(text) > 4000:
-        text.replace("71", "7")
-
-    if int(text) > 4000 and text[0] == "7":
-        text = "1" + text[1:]
 
     return int(text)
 
