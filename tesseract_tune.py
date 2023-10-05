@@ -20,8 +20,8 @@ def write(img: Image, score: int):
     _, img = cv2.threshold(img, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
 
     Image.fromarray(img).save(f"data/num-ground-truth/{count:0>5}.png")
-    # with open(f"data/num-ground-truth/{count:0>5}.gt.txt", "w") as f:
-    #     f.write(str(score))
+    with open(f"data/num-ground-truth/{count:0>5}.gt.txt", "w") as f:
+        f.write(str(score))
 
     count += 1
 
