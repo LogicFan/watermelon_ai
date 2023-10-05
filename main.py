@@ -41,6 +41,7 @@ if __name__ == "__main__":
     for _ in range(0, iteration):
         run = datetime.now().strftime("%Y%m%d%H%M")
         os.makedirs(f"data/raw/{run}")
+        print(f"run {run} started")
 
         turn = 0
         while True:
