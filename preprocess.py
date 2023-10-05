@@ -43,3 +43,10 @@ for run in os.listdir("data/raw"):
         if curr > final:
             print(f"[WARN]  incorrect OCR data for data/raw/{run}/{filename[i]}")
         write(img, final, next, curr)
+
+# folder = "202310050212"
+
+# for f in os.listdir(f"data/raw/{folder}"):
+#     i = int(f[:-4])
+#     print(f"working on {i}")
+#     os.rename(f"data/raw/{folder}/{f}", f"data/raw/{folder}/{i:0>3}.png")
