@@ -9,7 +9,7 @@ from dataset_util import WatermelonDataset
 # prepare dataset
 full_dataset = WatermelonDataset()
 print(f"dataset size {len(full_dataset)}")
-train_size = int(0.8 * len(full_dataset))
+train_size = int(0.95 * len(full_dataset))
 test_size = len(full_dataset) - train_size
 train_set, test_set = random_split(full_dataset, [train_size, test_size])
 
