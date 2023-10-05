@@ -13,7 +13,7 @@ class BotV1(core.BaseBot):
         model.classifier[3] = torch.nn.Linear(
             in_features=1024, out_features=1, bias=True
         )
-        model.load_state_dict(torch.load("./model_20231005_000634_0"))
+        model.load_state_dict(torch.load("./model_20231005_025025_2"))
         self.model = model
         self.model.eval()
 
