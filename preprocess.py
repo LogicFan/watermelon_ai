@@ -7,46 +7,41 @@ import capture
 count = 0
 
 
-def write(img: Image, final, next, curr):
+def write_data(img: Image, label: int):
     global count
     capture.playground(img).save(f"data/processed/{count:0>5}.png")
-    with open(f"data/processed/{count:0>5}.json", "w") as f:
-        json.dump({"final": final, "next": next, "curr": curr}, f)
+    with open(f"data/processed/{count:0>5}.label", "w") as f:
+        f.write(str(label))
+
     count += 1
+
+
+def read_score(path: str) -> int:
+    with open(path) as f:
+        return int(f.read())
 
 
 os.makedirs("data/processed/", exist_ok=True)
 
 for run in os.listdir("data/raw"):
     print(f"processing run {run}")
-    filename = sorted(os.listdir(f"data/raw/{run}"), reverse=True)
 
-    if len(filename) == 0:
+    # reverse ordering, so we process from newest to oldest
+    images = sorted(
+        (s for s in os.listdir(f"data/raw/{run}") if s.endswith(".png")), reverse=True
+    )
+
+    if len(images) == 0:
         continue
 
-    img = Image.open(f"data/raw/{run}/{filename[0]}")
+    path = f"data/raw/{run}/{images[0][:-4]}"
+    image = Image.open(f"{path}.png")
+    score = read_score(f"{path}.txt")
 
-    final = capture.score(img)
-    next = final
-    curr = final
+    for i in range(1, len(images)):
+        path = f"data/raw/{run}/{images[i][:-4]}"
 
-    if final > 4000:
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        print(f"[ERROR] incorrect OCR data for the last file of {run}")
-
-    write(img, final, next, curr)
-
-    for i in range(1, len(filename)):
-        img = Image.open(f"data/raw/{run}/{filename[i]}")
-        next = curr
-        curr = capture.score(img)
-        if curr > final:
-            print(f"[WARN]  incorrect OCR data for data/raw/{run}/{filename[i]}")
-        write(img, final, next, curr)
-
-# folder = "202310050212"
-
-# for f in os.listdir(f"data/raw/{folder}"):
-#     i = int(f[:-4])
-#     print(f"working on {i}")
-#     os.rename(f"data/raw/{folder}/{f}", f"data/raw/{folder}/{i:0>3}.png")
+        next_score = score
+        image = Image.open(f"data/raw/{run}/{images[i]}")
+        score = read_score(f"{path}.txt")
+        write_data(image, next_score - score)
