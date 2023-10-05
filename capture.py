@@ -31,7 +31,7 @@ def score(img: Image) -> int:
     _, img = cv2.threshold(img, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
     text: str = pytesseract.image_to_string(
         img,
-        lang="eng",
+        lang="num",
         config="--psm 8 -c tessedit_char_whitelist=0123456789",
     )
 
