@@ -20,6 +20,7 @@ def run_one_turn():
         frame = ScreenAnalyzer.get_screen()
         current_position = ScreenAnalyzer.recognize_drop_position(frame)
         prediction = estimator.predicate(ScreenAnalyzer.crop_playground(frame))
+        print(f"[DEBUG] position {current_position} has estimated score {prediction}")
         optimizer.put(current_position, prediction)
 
         if Controller.is_right_edge(current_position):
@@ -29,7 +30,8 @@ def run_one_turn():
         Controller.click_right()
         time.sleep(0.1)
 
-    optimal_position = optimizer.get_and_reset()
+    optimal_position, best_score = optimizer.get_and_reset()
+    print(f"[INFO]  pick {optimal_position} with the best score {best_score}")
     Controller.move_to_position(current_position, optimal_position)
 
 
@@ -37,12 +39,12 @@ if __name__ == "__main__":
     for _ in range(0, iteration):
         run = datetime.now().strftime("%Y%m%d%H%M")
         os.makedirs(f"data/raw/{run}")
-        print(f"run {run} started")
+        print(f"[INFO]  start {run}")
 
         turn = 0
         while True:
             try:
-                print(f"running turn {turn}")
+                print(f"[INFO]  turn {turn}")
                 run_one_turn()
             except GameOverException:
                 break
@@ -54,5 +56,5 @@ if __name__ == "__main__":
 
             turn += 1
 
-        print(f"run {run} completed")
+        print(f"[INFO]  complete {run}")
         Controller.restart()

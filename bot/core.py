@@ -26,10 +26,13 @@ class Optimizer:
             self.position = position
 
     def get(self) -> int:
-        return self.position
+        return (self.position, self.score)
 
-    def get_and_reset(self) -> int:
-        result = self.position
-        print(f"position {self.position} has the best score {self.score}")
+    def get_and_reset(self) -> (int, int):
+        """
+        return (position, score)
+        """
+        result = (self.position, self.score)
+        # print(f"position {self.position} has the best score {self.score}")
         self.reset()
         return result
