@@ -1,4 +1,5 @@
 from PIL import Image
+import random
 
 
 class BaseBot:
@@ -15,8 +16,12 @@ class Optimizer:
         self.score = 0
 
     def put(self, position: int, score: int):
-        # TODO FIX
         if score > self.score:
+            # we pick the better strategy
+            self.score = score
+            self.position = position
+        elif score == self.score and bool(random.getrandbits(1)):
+            # avoid bias towards position 0
             self.score = score
             self.position = position
 

@@ -1,15 +1,13 @@
 import os
 from PIL import Image
-import json
-
-import capture
+from screen import ScreenAnalyzer
 
 count = 0
 
 
 def write_data(img: Image, label: int):
     global count
-    capture.playground(img).save(f"data/processed/{count:0>5}.png")
+    ScreenAnalyzer.crop_playground(img).save(f"data/processed/{count:0>5}.png")
     with open(f"data/processed/{count:0>5}.label", "w") as f:
         f.write(str(label))
 
