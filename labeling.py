@@ -2,7 +2,7 @@ import os
 from PIL import Image
 import json
 
-import capture
+from screen import ScreenAnalyzer
 
 
 def validate(current_score: int, next_score: int) -> bool:
@@ -50,7 +50,7 @@ for run in os.listdir("data/raw"):
         continue
 
     image = Image.open(f"data/raw/{run}/{images[0]}")
-    current = capture.score(image)
+    current = ScreenAnalyzer.recognize_score(image)
 
     for i in range(0, len(images)):
         path = f"data/raw/{run}/{images[i][:-4]}"
@@ -62,7 +62,7 @@ for run in os.listdir("data/raw"):
             print(f"skipping {path} with score {current}")
             continue
         else:
-            current = capture.score(image)
+            current = ScreenAnalyzer.recognize_score(image)
 
         if not validate(current, next):
             print(
