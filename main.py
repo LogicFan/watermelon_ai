@@ -3,8 +3,8 @@ from PIL import Image
 import time
 import os
 
-import capture
-import controller
+from screen import ScreenAnalyzer, GameOverException
+from controller import Controller
 import bot
 
 # configuration
@@ -12,29 +12,25 @@ iteration = 10
 estimator = bot.v1.BotV1()
 
 
-def run_turn() -> bool:
-    controller.zero()
-
+def run_one_turn():
+    Controller.move_to_zero()
     optimizer = bot.core.Optimizer()
 
     while True:
-        frame = capture.screen_image()
-        position = capture.drop_position(frame)
-        prediction = estimator.predicate(capture.playground(frame))
-        optimizer.put(position, prediction)
+        frame = ScreenAnalyzer.get_screen()
+        current_position = ScreenAnalyzer.recognize_drop_position(frame)
+        prediction = estimator.predicate(ScreenAnalyzer.crop_playground(frame))
+        optimizer.put(current_position, prediction)
 
-        if position == controller.MAX_POSITION:
+        if Controller.is_right_edge(current_position):
+            # complete scan all possible drop position
             break
 
-        controller.right()
+        Controller.click_right()
         time.sleep(0.1)
 
-    best = optimizer.get()
-    optimizer.reset()
-
-    frame = capture.screen_image()
-    controller.move(best, frame)
-    return True
+    optimal_position = optimizer.get_and_reset()
+    Controller.move_to_position(current_position, optimal_position)
 
 
 if __name__ == "__main__":
@@ -47,16 +43,16 @@ if __name__ == "__main__":
         while True:
             try:
                 print(f"running turn {turn}")
-                run_turn()
-            except capture.GameOverException:
+                run_one_turn()
+            except GameOverException:
                 break
 
-            screen = capture.screen_image()
+            screen = ScreenAnalyzer.get_screen()
             screen.save(f"data/raw/{run}/{turn:0>3}.png")
-            controller.confirm()
+            Controller.click_confirm()
             time.sleep(5)
 
             turn += 1
 
         print(f"run {run} completed")
-        controller.restart()
+        Controller.restart()
