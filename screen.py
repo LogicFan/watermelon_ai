@@ -25,10 +25,15 @@ class ScreenAnalyzer:
         return screenshot
 
     @staticmethod
-    def recognize_score(img: Image) -> int:
+    def crop_score_image(img: Image) -> Image:
         img = numpy.array(img.crop((112, 115, 273, 165)))
         img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
         _, img = cv2.threshold(img, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+        return Image.fromarray(img)
+
+    @staticmethod
+    def recognize_score(img: Image) -> int:
+        img = ScreenAnalyzer.crop_score_image(img)
         text: str = pytesseract.image_to_string(
             img,
             lang="num",
