@@ -4,7 +4,7 @@ from torch.utils.data import random_split, DataLoader
 from torchvision.models import mobilenet_v3_small, MobileNet_V3_Small_Weights
 from datetime import datetime
 
-from dataset_util import WatermelonDataset
+from v1.load_data import WatermelonDataset
 
 # prepare dataset
 full_dataset = WatermelonDataset()
