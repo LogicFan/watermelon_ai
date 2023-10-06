@@ -20,7 +20,9 @@ def run_one_turn():
         frame = ScreenAnalyzer.get_screen()
         current_position = ScreenAnalyzer.recognize_drop_position(frame)
         prediction = estimator.predicate(ScreenAnalyzer.crop_playground(frame))
-        print(f"[DEBUG] position {current_position} has estimated score {prediction}")
+        print(
+            f"[DEBUG] position {current_position} has estimated score {prediction:.2f}"
+        )
         optimizer.put(current_position, prediction)
 
         if Controller.is_right_edge(current_position):
@@ -31,7 +33,7 @@ def run_one_turn():
         time.sleep(0.1)
 
     optimal_position, best_score = optimizer.get_and_reset()
-    print(f"[INFO]  pick {optimal_position} with the best score {best_score}")
+    print(f"[INFO]  pick {optimal_position} with the best score {best_score:.2f}")
     Controller.move_to_position(current_position, optimal_position)
 
 

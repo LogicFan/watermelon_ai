@@ -12,8 +12,8 @@ class Optimizer:
         self.reset()
 
     def reset(self):
-        self.position = 0
-        self.score = 0
+        self.position = None
+        self.score = float("-inf")
 
     def put(self, position: int, score: int):
         if score > self.score:
